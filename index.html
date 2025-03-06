@@ -48,15 +48,38 @@
             border-radius: 15px;
             box-shadow: 0px 0px 15px #000;
         }
+        .image-container {
+            margin: 20px auto;
+        }
+        .image-container img {
+            width: 40%;
+            border-radius: 15px;
+            box-shadow: 3px 3px 10px #000;
+            margin: 10px;
+        }
+        .rubiks-container {
+            margin-top: 30px;
+        }
     </style>
 </head>
 <body>
     <div class="minecraft-bg">
         <h1>Welcome to Jacob's Website!</h1>
         <p>This is the coolest website ever, inspired by the blocky world of adventure!</p>
+        
+        <div class="image-container">
+            <img src="cooljake1.jpg" alt="Cool Jake 1">
+            <img src="cooljake2.jpg" alt="Cool Jake 2">
+        </div>
+
         <div class="button-container">
             <a class="button google" href="https://www.google.com" target="_blank">Go to Google</a>
             <a class="button chatgpt" href="https://www.chatgpt.com" target="_blank">Go to ChatGPT</a>
+        </div>
+        
+        <div class="rubiks-container">
+            <h2>Try Solving Jake's Rubik's Cube!</h2>
+            <iframe src="https://ruwix.com/widget/3d/" width="350" height="450" style="border:0;"></iframe>
         </div>
     </div>
 </body>
