@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Jacob's Awesome Website</title>
+    <style>
+        body {
+            background-color: #1b5e20;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            color: #fff;
+        }
+        h1 {
+            font-size: 3em;
+            text-shadow: 2px 2px 4px #000;
+        }
+        p {
+            font-size: 1.5em;
+        }
+        .button-container {
+            margin-top: 20px;
+        }
+        .button {
+            display: inline-block;
+            padding: 15px 30px;
+            font-size: 1.5em;
+            margin: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 10px;
+            color: white;
+            text-decoration: none;
+            box-shadow: 3px 3px 6px #000;
+        }
+        .google {
+            background-color: #4285F4;
+        }
+        .chatgpt {
+            background-color: #34A853;
+        }
+        .button:hover {
+            opacity: 0.8;
+        }
+        .minecraft-bg {
+            background-image: url('https://www.minecraft.net/content/dam/minecraft/backgrounds/bg-grass.jpg');
+            background-size: cover;
+            background-position: center;
+            padding: 50px;
+            border-radius: 15px;
+            box-shadow: 0px 0px 15px #000;
+        }
+    </style>
+</head>
+<body>
+    <div class="minecraft-bg">
+        <h1>Welcome to Jacob's Website!</h1>
+        <p>This is the coolest website ever, inspired by the blocky world of adventure!</p>
+        <div class="button-container">
+            <a class="button google" href="https://www.google.com" target="_blank">Go to Google</a>
+            <a class="button chatgpt" href="https://www.chatgpt.com" target="_blank">Go to ChatGPT</a>
+        </div>
+    </div>
+</body>
+</html>
