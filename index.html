@@ -47,6 +47,7 @@
         let attempts = 3;
         let correctStreak = 0;
         let failedOnce = false;
+        let recoveryMode = false;
 
         function generateQuestion() {
             document.getElementById("difficulty-level").innerText = `Current Difficulty: ${difficulty}`;
@@ -64,26 +65,39 @@
             let answer = document.getElementById("math-answer").value;
             let correct = document.getElementById("math-answer").dataset.answer;
             if (parseInt(answer) === parseInt(correct)) {
-                correctStreak++;
-                if (!failedOnce || correctStreak >= 2) {
-                    difficulty++;
-                    correctStreak = 0;
-                    failedOnce = false;
-                    document.getElementById("math-notification").innerText = "Correct! Leveling up!";
+                if (recoveryMode) {
+                    correctStreak++;
+                    if (correctStreak >= 2) {
+                        difficulty++;
+                        recoveryMode = false;
+                        correctStreak = 0;
+                        document.getElementById("math-notification").innerText = "Recovered! Leveling back up!";
+                    } else {
+                        document.getElementById("math-notification").innerText = "Correct! One more to recover difficulty.";
+                    }
                 } else {
-                    document.getElementById("math-notification").innerText = "Correct! One more to level up.";
+                    difficulty++;
+                    document.getElementById("math-notification").innerText = "Correct! Leveling up!";
                 }
                 generateQuestion();
             } else {
-                attempts--;
-                if (attempts > 0) {
-                    document.getElementById("math-notification").innerText = `That's not right. Try again! Attempts left: ${attempts}`;
-                    document.getElementById("math-attempts").innerText = `Attempts left: ${attempts}`;
+                if (!recoveryMode) {
+                    attempts--;
+                    if (attempts > 0) {
+                        document.getElementById("math-notification").innerText = `That's not right. Try again! Attempts left: ${attempts}`;
+                        document.getElementById("math-attempts").innerText = `Attempts left: ${attempts}`;
+                    } else {
+                        difficulty = Math.max(1, difficulty - 1);
+                        recoveryMode = true;
+                        correctStreak = 0;
+                        document.getElementById("math-notification").innerText = "Out of attempts! Dropping difficulty. Now you must get two correct in a row to level up.";
+                        generateQuestion();
+                    }
                 } else {
-                    difficulty = Math.max(1, difficulty - 1);
+                    document.getElementById("math-notification").innerText = "Incorrect! You must restart!";
+                    difficulty = 1;
+                    recoveryMode = false;
                     correctStreak = 0;
-                    failedOnce = true;
-                    document.getElementById("math-notification").innerText = "Out of attempts! Dropping difficulty level.";
                     generateQuestion();
                 }
             }
@@ -127,7 +141,7 @@
 
         <div class="spotify-container">
             <h2>Listen to Music</h2>
-            <iframe src="https://open.spotify.com/embed" width="100%" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+            <iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M" width="100%" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
         </div>
     </div>
 </body>
