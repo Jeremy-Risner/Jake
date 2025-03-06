@@ -16,57 +16,6 @@
         p {
             font-size: 1.5em;
         }
-        .button-container {
-            margin-top: 20px;
-        }
-        .button {
-            display: inline-block;
-            padding: 15px 30px;
-            font-size: 1.5em;
-            margin: 10px;
-            border: none;
-            cursor: pointer;
-            border-radius: 10px;
-            color: white;
-            text-decoration: none;
-            box-shadow: 3px 3px 6px #000;
-        }
-        .google {
-            background-color: #4285F4;
-        }
-        .chatgpt {
-            background-color: #34A853;
-        }
-        .button:hover {
-            opacity: 0.8;
-        }
-        .minecraft-bg {
-            background-image: url('https://www.minecraft.net/content/dam/minecraft/backgrounds/bg-grass.jpg');
-            background-size: cover;
-            background-position: center;
-            padding: 50px;
-            border-radius: 15px;
-            box-shadow: 0px 0px 15px #000;
-        }
-        .image-container {
-            margin: 20px auto;
-        }
-        .image-container img {
-            width: 40%;
-            border-radius: 15px;
-            box-shadow: 3px 3px 10px #000;
-            margin: 10px;
-            display: inline-block;
-        }
-        .rubiks-container, .math-container, .spotify-container {
-            margin-top: 30px;
-        }
-        .rubiks-container iframe, .spotify-container iframe {
-            width: 90%;
-            max-width: 600px;
-            height: 500px;
-            border: none;
-        }
         .math-container {
             background-color: #2e7d32;
             padding: 20px;
@@ -75,12 +24,20 @@
             max-width: 400px;
             margin: 20px auto;
         }
+        .notification {
+            font-size: 1.2em;
+            color: #fff;
+            margin-top: 10px;
+        }
     </style>
     <script>
         let difficulty = 1;
         let attempts = 3;
         let correctStreak = 0;
+        let failedOnce = false;
+
         function generateQuestion() {
+            document.getElementById("difficulty-level").innerText = `Current Difficulty: ${difficulty}`;
             let num1 = Math.floor(Math.random() * (difficulty * 10)) + 1;
             let num2 = Math.floor(Math.random() * (difficulty * 10)) + 1;
             document.getElementById("math-question").innerText = `${num1} + ${num2} = ?`;
@@ -88,34 +45,46 @@
             document.getElementById("math-answer").dataset.answer = num1 + num2;
             attempts = 3;
             document.getElementById("math-attempts").innerText = `Attempts left: ${attempts}`;
+            document.getElementById("math-notification").innerText = "";
         }
+
         function checkAnswer() {
             let answer = document.getElementById("math-answer").value;
             let correct = document.getElementById("math-answer").dataset.answer;
             if (parseInt(answer) === parseInt(correct)) {
                 correctStreak++;
-                if (correctStreak >= 2) {
+                if (!failedOnce || correctStreak >= 2) {
                     difficulty++;
-                    alert("Correct! Leveling up!");
                     correctStreak = 0;
+                    failedOnce = false;
+                    document.getElementById("math-notification").innerText = "Correct! Leveling up!";
                 } else {
-                    alert("Correct! Get one more right to level up.");
+                    document.getElementById("math-notification").innerText = "Correct! One more to level up.";
                 }
                 generateQuestion();
             } else {
                 attempts--;
                 if (attempts > 0) {
-                    alert(`Incorrect. Try again! Attempts left: ${attempts}`);
+                    document.getElementById("math-notification").innerText = `Incorrect. Try again! Attempts left: ${attempts}`;
                     document.getElementById("math-attempts").innerText = `Attempts left: ${attempts}`;
                 } else {
                     difficulty = Math.max(1, difficulty - 1);
-                    alert("Out of attempts! Dropping difficulty level.");
                     correctStreak = 0;
+                    failedOnce = true;
+                    document.getElementById("math-notification").innerText = "Out of attempts! Dropping difficulty level.";
                     generateQuestion();
                 }
             }
         }
-        window.onload = generateQuestion;
+
+        document.addEventListener("DOMContentLoaded", () => {
+            generateQuestion();
+            document.getElementById("math-answer").addEventListener("keypress", function(event) {
+                if (event.key === "Enter") {
+                    checkAnswer();
+                }
+            });
+        });
     </script>
 </head>
 <body>
@@ -123,32 +92,14 @@
         <h1>Welcome to Jacob's Website!</h1>
         <p>This is the coolest website ever, inspired by the blocky world of adventure!</p>
         
-        <div class="image-container">
-            <img src="CoolJake1.jpg" alt="Cool Jake 1">
-            <img src="CoolJake2.jpg" alt="Cool Jake 2">
-        </div>
-
-        <div class="button-container">
-            <a class="button google" href="https://www.google.com" target="_blank">Go to Google</a>
-            <a class="button chatgpt" href="https://www.chatgpt.com" target="_blank">Go to ChatGPT</a>
-        </div>
-        
-        <div class="rubiks-container">
-            <h2>Try Solving Jake's Rubik's Cube!</h2>
-            <iframe src="https://ruwix.com/online-puzzle-simulators/" allowfullscreen></iframe>
-        </div>
-
         <div class="math-container">
             <h2>Math Challenge</h2>
+            <p id="difficulty-level">Current Difficulty: 1</p>
             <p id="math-question"></p>
             <p id="math-attempts">Attempts left: 3</p>
             <input type="number" id="math-answer" placeholder="Your answer">
             <button onclick="checkAnswer()">Submit</button>
-        </div>
-
-        <div class="spotify-container">
-            <h2>Listen to Music</h2>
-            <iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M" width="100%" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+            <p id="math-notification" class="notification"></p>
         </div>
     </div>
 </body>
