@@ -57,7 +57,7 @@
             document.getElementById("math-answer").value = "";
             document.getElementById("math-answer").dataset.answer = num1 + num2;
             attempts = 3;
-            document.getElementById("math-attempts").innerText = `Attempts left: ${attempts}`;
+            document.getElementById("math-attempts").innerText = recoveryMode ? "RECOVERY MODE ALERT! Answer two questions correctly in a row to return to your level, otherwise, YOU START OVER!!!!!" : `Attempts left: ${attempts}`;
             document.getElementById("math-notification").innerText = "";
         }
 
