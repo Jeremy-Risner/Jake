@@ -23,6 +23,7 @@
             box-shadow: 3px 3px 10px #000;
             max-width: 600px;
             margin: 20px auto;
+            position: relative;
         }
         .button-container {
             display: flex;
@@ -44,6 +45,7 @@
         }
         .gray-out {
             background-color: gray !important;
+            opacity: 0.7;
         }
         .rubiks-container iframe, .spotify-container iframe {
             width: 100%;
@@ -57,129 +59,73 @@
             box-shadow: 3px 3px 10px #000;
             margin: 10px;
         }
+        #open-math-btn {
+            font-size: 1.5em;
+            padding: 15px 30px;
+            background: white;
+            color: black;
+            border-radius: 10px;
+            cursor: pointer;
+            display: none;
+        }
     </style>
     <script>
-        let difficulty = 1;
-        let attempts = 3;
-        let correctStreak = 0;
-        let failedOnce = false;
-        let recoveryMode = false;
-        let questionHistory = [];
-        let currentOperation = "addition"; generateQuestion();
+        document.addEventListener("DOMContentLoaded", function() {
+            let difficulty = 1;
+            let attempts = 3;
+            let correctStreak = 0;
+            let failedOnce = false;
+            let recoveryMode = false;
+            let questionHistory = [];
+            let currentOperation = "addition";
+            generateQuestion();
 
-        function generateQuestion() {
-            document.getElementById("difficulty-level").innerText = `Current Difficulty: ${difficulty}`;
-            let num1 = Math.floor(Math.random() * (difficulty * 10)) + 1;
-            let num2 = Math.floor(Math.random() * (difficulty * 10)) + 1;
-            let question = "";
-            let answer = 0;
+            function generateQuestion() {
+                let difficultyElement = document.getElementById("difficulty-level");
+                if (!difficultyElement) return;
+                difficultyElement.innerText = `Current Difficulty: ${difficulty}`;
+                let num1 = Math.floor(Math.random() * (difficulty * 10)) + 1;
+                let num2 = Math.floor(Math.random() * (difficulty * 10)) + 1;
+                let question = "";
+                let answer = 0;
 
-            switch (currentOperation) {
-                case "addition":
-                    question = `${num1} + ${num2} = ?`;
-                    answer = num1 + num2;
-                    break;
-                case "subtraction":
-                    question = `${num1} - ${num2} = ?`;
-                    answer = num1 - num2;
-                    break;
-                case "multiplication":
-                    question = `${num1} × ${num2} = ?`;
-                    answer = num1 * num2;
-                    break;
-                case "division":
-                    num1 = num1 * num2;
-                    question = `${num1} ÷ ${num2} = ?`;
-                    answer = num1 / num2;
-                    break;
-            }
-            questionHistory.push({ question, answer });
-            document.getElementById("math-question").innerText = question;
-            document.getElementById("math-answer").value = "";
-            document.getElementById("math-answer").dataset.answer = answer;
-            attempts = 3;
-            document.getElementById("math-attempts").innerText = recoveryMode ? "RECOVERY MODE ALERT! Answer two questions correctly in a row to return to your level, otherwise, YOU START OVER!!!!!" : `Attempts left: ${attempts}`;
-            document.getElementById("math-notification").innerText = "";
-        }
-
-        function checkAnswer() {
-            let answer = document.getElementById("math-answer").value;
-            let correct = document.getElementById("math-answer").dataset.answer;
-            if (parseInt(answer) === parseInt(correct)) {
-                launchConfetti();
-                difficulty++;
-                generateQuestion();
-            } else {
-                attempts--;
-                document.getElementById("math-answer").value = "";
-                if (attempts <= 0) {
-                    difficulty = Math.max(1, difficulty - 1);
-                    generateQuestion();
+                switch (currentOperation) {
+                    case "addition":
+                        question = `${num1} + ${num2} = ?`;
+                        answer = num1 + num2;
+                        break;
+                    case "subtraction":
+                        question = `${num1} - ${num2} = ?`;
+                        answer = num1 - num2;
+                        break;
+                    case "multiplication":
+                        question = `${num1} × ${num2} = ?`;
+                        answer = num1 * num2;
+                        break;
+                    case "division":
+                        num1 = num1 * num2;
+                        question = `${num1} ÷ ${num2} = ?`;
+                        answer = num1 / num2;
+                        break;
                 }
+                questionHistory.push({ question, answer });
+                document.getElementById("math-question").innerText = question;
+                document.getElementById("math-answer").value = "";
+                document.getElementById("math-answer").dataset.answer = answer;
+                attempts = 3;
+                document.getElementById("math-attempts").innerText = recoveryMode ? "RECOVERY MODE ALERT! Answer two questions correctly in a row to return to your level, otherwise, YOU START OVER!!!!!" : `Attempts left: ${attempts}`;
+                document.getElementById("math-notification").innerText = "";
             }
-        }
-
-        function resetMathChallenge() { difficulty = 1; generateQuestion(); }
-        function skipQuestion() { difficulty++; generateQuestion(); }
+        });
+        
         function closeMathChallenge() {
-            document.querySelector(".math-container").classList.add("gray-out", "hidden");
-            document.getElementById("open-math-btn").classList.remove("hidden");
+            document.querySelector(".math-container").classList.add("gray-out");
+            document.getElementById("open-math-btn").style.display = "block";
         }
         function openMathChallenge() {
-            document.querySelector(".math-container").classList.remove("gray-out", "hidden");
-            document.getElementById("open-math-btn").classList.add("hidden");
+            document.querySelector(".math-container").classList.remove("gray-out");
+            document.getElementById("open-math-btn").style.display = "none";
         }
-        function previousQuestion() {
-            if (questionHistory.length > 1) {
-                questionHistory.pop();
-                let lastQuestion = questionHistory[questionHistory.length - 1];
-                document.getElementById("math-question").innerText = lastQuestion.question;
-                document.getElementById("math-answer").dataset.answer = lastQuestion.answer;
-            }
-        }
-        function cycleOperation() {
-            const operations = ["addition", "subtraction", "multiplication", "division"];
-            let index = operations.indexOf(currentOperation);
-            currentOperation = operations[(index + 1) % operations.length];
-            generateQuestion();
-        }
-        function launchConfetti() {
-    const confettiCanvas = document.createElement('canvas');
-    confettiCanvas.id = 'confetti-canvas';
-    document.body.appendChild(confettiCanvas);
-    const confettiCtx = confettiCanvas.getContext('2d');
-    confettiCanvas.width = window.innerWidth;
-    confettiCanvas.height = window.innerHeight;
-    
-    let particles = [];
-    for (let i = 0; i < 100; i++) {
-        particles.push({
-            x: Math.random() * confettiCanvas.width,
-            y: Math.random() * confettiCanvas.height,
-            r: Math.random() * 5 + 2,
-            d: Math.random() * 10 + 2,
-            color: `hsl(${Math.random() * 360}, 100%, 50%)`
-        });
-    }
-    
-    function drawConfetti() {
-        confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
-        particles.forEach(p => {
-            confettiCtx.beginPath();
-            confettiCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-            confettiCtx.fillStyle = p.color;
-            confettiCtx.fill();
-            p.y += p.d;
-            if (p.y > confettiCanvas.height) p.y = 0;
-        });
-    }
-    
-    let confettiInterval = setInterval(drawConfetti, 30);
-    setTimeout(() => {
-        clearInterval(confettiInterval);
-        document.body.removeChild(confettiCanvas);
-    }, 3000);
-}
     </script>
 </head>
 <body>
@@ -194,7 +140,7 @@
             <img src="CoolJake1.jpg" alt="Cool Jake 1">
             <img src="CoolJake2.jpg" alt="Cool Jake 2">
         </div>
-        <button id="open-math-btn" class="hidden" onclick="openMathChallenge()">Open Math Challenge</button>
+        <button id="open-math-btn" onclick="openMathChallenge()">Open Math Challenge</button>
         <div class="math-container">
             <h2>Math Challenge</h2>
             <p id="difficulty-level">Current Difficulty: 1</p>
@@ -209,14 +155,6 @@
                 <button onclick="previousQuestion()">Previous Question</button>
                 <button onclick="cycleOperation()">Cycle Type</button>
             </div>
-        </div>
-        <div class="rubiks-container">
-            <h2>Try Solving Jake's Rubik's Cube!</h2>
-            <iframe src="https://ruwix.com/online-puzzle-simulators/" allowfullscreen></iframe>
-        </div>
-        <div class="spotify-container">
-            <h2>Listen to Music</h2>
-            <iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M" allowfullscreen></iframe>
         </div>
     </div>
 </body>
