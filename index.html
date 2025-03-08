@@ -35,7 +35,7 @@
             margin: 5px;
             padding: 10px;
             border: none;
-            background: #fff;
+            background: white;
             color: black;
             border-radius: 5px;
             cursor: pointer;
@@ -47,44 +47,17 @@
             background-color: gray !important;
             opacity: 0.7;
         }
-        .rubiks-container iframe, .spotify-container iframe {
-            width: 100%;
-            max-width: 600px;
-            height: 500px;
-            border: none;
-        }
-        .image-container img {
-            width: 80%;
-            border-radius: 10px;
-            box-shadow: 3px 3px 10px #000;
-            margin: 10px;
-        }
-        #open-math-btn {
-            font-size: 1.5em;
-            padding: 15px 30px;
-            background: white;
-            color: black;
-            border-radius: 10px;
-            cursor: pointer;
-            display: none;
-            width: 100%;
-        }
     </style>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             let difficulty = 1;
-            let attempts = 3;
-            let correctStreak = 0;
-            let failedOnce = false;
-            let recoveryMode = false;
-            let questionHistory = [];
             let currentOperation = "addition";
+            let questionHistory = [];
+            const operations = ["addition", "subtraction", "multiplication", "division", "fractions", "geometry"];
             generateQuestion();
 
             function generateQuestion() {
-                let difficultyElement = document.getElementById("difficulty-level");
-                if (!difficultyElement) return;
-                difficultyElement.innerText = `Current Difficulty: ${difficulty}`;
+                document.getElementById("difficulty-level").innerText = `Current Difficulty: ${difficulty}`;
                 let num1 = Math.floor(Math.random() * (difficulty * 10)) + 1;
                 let num2 = Math.floor(Math.random() * (difficulty * 10)) + 1;
                 let question = "";
@@ -121,9 +94,38 @@
                 document.getElementById("math-question").innerText = question;
                 document.getElementById("math-answer").value = "";
                 document.getElementById("math-answer").dataset.answer = answer;
-                attempts = 3;
-                document.getElementById("math-attempts").innerText = recoveryMode ? "RECOVERY MODE ALERT! Answer two questions correctly in a row to return to your level, otherwise, YOU START OVER!!!!!" : `Attempts left: ${attempts}`;
-                document.getElementById("math-notification").innerText = "";
+            }
+
+            function checkAnswer() {
+                let answer = document.getElementById("math-answer").value;
+                let correct = document.getElementById("math-answer").dataset.answer;
+                if (answer == correct) {
+                    difficulty++;
+                    launchConfetti();
+                    generateQuestion();
+                }
+            }
+
+            function cycleOperation() {
+                let index = operations.indexOf(currentOperation);
+                currentOperation = operations[(index + 1) % operations.length];
+                generateQuestion();
+            }
+
+            function closeMathChallenge() {
+                document.querySelector(".math-container").classList.add("gray-out");
+                document.getElementById("open-math-btn").classList.remove("hidden");
+                document.getElementById("math-controls").classList.add("hidden");
+            }
+
+            function openMathChallenge() {
+                document.querySelector(".math-container").classList.remove("gray-out");
+                document.getElementById("open-math-btn").classList.add("hidden");
+                document.getElementById("math-controls").classList.remove("hidden");
+            }
+
+            function launchConfetti() {
+                alert("🎉 Confetti Effect! (To be implemented with animation)");
             }
         });
     </script>
@@ -134,6 +136,25 @@
         <div class="button-container">
             <a href="https://www.google.com" target="_blank">Google</a>
             <a href="https://chat.openai.com" target="_blank">ChatGPT</a>
+        </div>
+        <div class="image-container">
+            <h2>Cool Jake</h2>
+            <img src="CoolJake1.jpg" alt="Cool Jake 1">
+            <img src="CoolJake2.jpg" alt="Cool Jake 2">
+        </div>
+        <div class="math-container">
+            <h2>Math Challenge</h2>
+            <p id="difficulty-level">Current Difficulty: 1</p>
+            <p id="math-question"></p>
+            <input type="number" id="math-answer" placeholder="Your answer" onkeydown="if(event.key==='Enter'){checkAnswer();}">
+            <button onclick="checkAnswer()">Submit</button>
+            <div id="math-controls" class="button-container">
+                <button onclick="difficulty=1; generateQuestion();">Start Over</button>
+                <button onclick="generateQuestion()">Skip</button>
+                <button onclick="cycleOperation()">Cycle Type</button>
+                <button onclick="closeMathChallenge()">Close Math Challenge</button>
+            </div>
+            <button id="open-math-btn" class="hidden" onclick="openMathChallenge()">Open Math Challenge</button>
         </div>
         <div class="spotify-container">
             <h2>Listen to Music</h2>
