@@ -84,6 +84,7 @@
                 if (!recoveryMode) {
                     attempts--;
                     if (attempts > 0) {
+                    document.getElementById("math-answer").value = "";
                         document.getElementById("math-notification").innerText = `That's not right. Try again! Attempts left: ${attempts}`;
                         document.getElementById("math-attempts").innerText = `Attempts left: ${attempts}`;
                     } else {
