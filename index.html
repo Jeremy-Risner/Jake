@@ -143,7 +143,43 @@
             currentOperation = operations[(index + 1) % operations.length];
             generateQuestion();
         }
-        function launchConfetti() { alert("🎉 Confetti Effect 🎉"); }
+        function launchConfetti() {
+    const confettiCanvas = document.createElement('canvas');
+    confettiCanvas.id = 'confetti-canvas';
+    document.body.appendChild(confettiCanvas);
+    const confettiCtx = confettiCanvas.getContext('2d');
+    confettiCanvas.width = window.innerWidth;
+    confettiCanvas.height = window.innerHeight;
+    
+    let particles = [];
+    for (let i = 0; i < 100; i++) {
+        particles.push({
+            x: Math.random() * confettiCanvas.width,
+            y: Math.random() * confettiCanvas.height,
+            r: Math.random() * 5 + 2,
+            d: Math.random() * 10 + 2,
+            color: `hsl(${Math.random() * 360}, 100%, 50%)`
+        });
+    }
+    
+    function drawConfetti() {
+        confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+        particles.forEach(p => {
+            confettiCtx.beginPath();
+            confettiCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+            confettiCtx.fillStyle = p.color;
+            confettiCtx.fill();
+            p.y += p.d;
+            if (p.y > confettiCanvas.height) p.y = 0;
+        });
+    }
+    
+    let confettiInterval = setInterval(drawConfetti, 30);
+    setTimeout(() => {
+        clearInterval(confettiInterval);
+        document.body.removeChild(confettiCanvas);
+    }, 3000);
+}
     </script>
 </head>
 <body>
