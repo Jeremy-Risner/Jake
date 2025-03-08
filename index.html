@@ -65,7 +65,7 @@
         let failedOnce = false;
         let recoveryMode = false;
         let questionHistory = [];
-        let currentOperation = "addition";
+        let currentOperation = "addition"; generateQuestion();
 
         function generateQuestion() {
             document.getElementById("difficulty-level").innerText = `Current Difficulty: ${difficulty}`;
@@ -167,7 +167,7 @@
             <input type="number" id="math-answer" placeholder="Your answer">
             <button onclick="checkAnswer()">Submit</button>
             <div class="button-container">
-                <button onclick="resetMathChallenge()">Start Over</button>
+                <button id="start-over-btn" onclick="resetMathChallenge()" disabled>Start Over</button>
                 <button onclick="skipQuestion()">Skip Question</button>
                 <button onclick="closeMathChallenge()">Close Math Challenge</button>
                 <button onclick="previousQuestion()">Previous Question</button>
