@@ -67,6 +67,7 @@
             border-radius: 10px;
             cursor: pointer;
             display: none;
+            width: 100%;
         }
     </style>
     <script>
@@ -107,6 +108,14 @@
                         question = `${num1} ÷ ${num2} = ?`;
                         answer = num1 / num2;
                         break;
+                    case "fractions":
+                        question = `Simplify: ${(num1 * 2)}/${(num2 * 2)}`;
+                        answer = `${num1}/${num2}`;
+                        break;
+                    case "geometry":
+                        question = `What is the area of a square with side length ${num1}?`;
+                        answer = num1 * num1;
+                        break;
                 }
                 questionHistory.push({ question, answer });
                 document.getElementById("math-question").innerText = question;
@@ -117,15 +126,6 @@
                 document.getElementById("math-notification").innerText = "";
             }
         });
-        
-        function closeMathChallenge() {
-            document.querySelector(".math-container").classList.add("gray-out");
-            document.getElementById("open-math-btn").style.display = "block";
-        }
-        function openMathChallenge() {
-            document.querySelector(".math-container").classList.remove("gray-out");
-            document.getElementById("open-math-btn").style.display = "none";
-        }
     </script>
 </head>
 <body>
@@ -135,26 +135,13 @@
             <a href="https://www.google.com" target="_blank">Google</a>
             <a href="https://chat.openai.com" target="_blank">ChatGPT</a>
         </div>
-        <div class="image-container">
-            <h2>Cool Jake</h2>
-            <img src="CoolJake1.jpg" alt="Cool Jake 1">
-            <img src="CoolJake2.jpg" alt="Cool Jake 2">
+        <div class="spotify-container">
+            <h2>Listen to Music</h2>
+            <iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M" allowfullscreen></iframe>
         </div>
-        <button id="open-math-btn" onclick="openMathChallenge()">Open Math Challenge</button>
-        <div class="math-container">
-            <h2>Math Challenge</h2>
-            <p id="difficulty-level">Current Difficulty: 1</p>
-            <p id="math-question"></p>
-            <p id="math-attempts">Attempts left: 3</p>
-            <input type="number" id="math-answer" placeholder="Your answer">
-            <button onclick="checkAnswer()">Submit</button>
-            <div class="button-container">
-                <button id="start-over-btn" onclick="resetMathChallenge()" disabled>Start Over</button>
-                <button onclick="skipQuestion()">Skip Question</button>
-                <button onclick="closeMathChallenge()">Close Math Challenge</button>
-                <button onclick="previousQuestion()">Previous Question</button>
-                <button onclick="cycleOperation()">Cycle Type</button>
-            </div>
+        <div class="rubiks-container">
+            <h2>Try Solving Jake's Rubik's Cube!</h2>
+            <iframe src="https://ruwix.com/online-puzzle-simulators/" allowfullscreen></iframe>
         </div>
     </div>
 </body>
