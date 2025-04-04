@@ -1,89 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Jake's Epic Playground</title>
-  <!-- Pixelated font for headings -->
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+  <!-- Google Fonts for Pixel/Minecraft feel -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+    rel="stylesheet"
+  />
+
   <style>
-    /* Global Styles */
+    /* RESET & GLOBALS */
     * {
       box-sizing: border-box;
-    }
-    body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #1b5e20, #4caf50);
-      color: #fff;
-      line-height: 1.6;
-    }
-    a {
-      text-decoration: none;
+      padding: 0;
     }
 
-    /* Header & Navigation */
+    body {
+      font-family: Arial, sans-serif;
+      background: #2e7d32 url("https://via.placeholder.com/800x800?text=Grass+Pattern") repeat;
+      color: #fff;
+      line-height: 1.5;
+    }
+
+    /* HEADER */
     header {
-      background: rgba(0, 0, 0, 0.5);
-      padding: 1.5rem;
+      background: url("https://via.placeholder.com/1200x400?text=Creeper+Banner")
+        center/cover no-repeat;
       text-align: center;
+      padding: 2rem 1rem;
     }
     header h1 {
-      font-family: 'Press Start 2P', cursive;
-      font-size: 2.5rem;
-      margin: 0;
+      font-family: "Press Start 2P", cursive;
+      font-size: 2.2rem;
+      color: #fff;
       text-shadow: 2px 2px 4px #000;
     }
+
+    /* NAVIGATION */
     nav {
-      margin-top: 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      background-color: rgba(0, 0, 0, 0.5);
+      padding: 0.5rem;
     }
-    nav .button {
+    nav a {
+      color: #fff;
+      text-decoration: none;
       margin: 0.3rem;
       padding: 0.5rem 1rem;
-      background-color: #fff;
-      color: #000;
-      border: none;
+      background-color: #388e3c;
       border-radius: 5px;
       font-size: 0.9rem;
-      cursor: pointer;
-      transition: background-color 0.3s;
+      transition: background 0.3s;
     }
-    nav .button:hover {
-      background-color: #ddd;
+    nav a:hover {
+      background-color: #66bb6a;
     }
 
-    /* Main Layout */
+    /* MAIN CONTENT */
     main {
       max-width: 1200px;
       margin: 1rem auto;
-      padding: 0 1rem;
+      padding: 1rem;
     }
+
     section {
-      background-color: rgba(0, 100, 0, 0.7);
+      background-color: rgba(0, 0, 0, 0.5);
       margin: 2rem 0;
-      padding: 1.5rem;
       border-radius: 10px;
-      box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.7);
-      transition: transform 0.3s;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
+      padding: 1.5rem;
+      text-align: center; /* Center content */
     }
-    section:hover {
-      transform: scale(1.02);
-    }
-    .card-header {
-      font-family: 'Press Start 2P', cursive;
+
+    .section-header {
+      font-family: "Press Start 2P", cursive;
       font-size: 1.5rem;
       margin-bottom: 1rem;
       padding-bottom: 0.5rem;
       border-bottom: 2px solid #fff;
-      text-align: center;
     }
-    .button-group {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      margin-top: 1rem;
-    }
+
+    /* BUTTONS & INPUTS */
     .button {
+      display: inline-block;
       background-color: #fff;
       color: #000;
       border: none;
@@ -91,138 +96,204 @@
       margin: 0.5rem;
       border-radius: 5px;
       cursor: pointer;
-      transition: background-color 0.3s;
       font-size: 0.9rem;
+      transition: background-color 0.3s;
     }
     .button:hover {
-      background-color: #ddd;
+      background-color: #ccc;
     }
+    input[type="file"],
     input[type="number"],
     input[type="text"] {
+      display: block;
+      margin: 0.5rem auto;
       padding: 0.5rem;
-      margin: 0.5rem;
       border: none;
       border-radius: 5px;
-      width: 150px;
+      width: 70%;
+      max-width: 300px;
       font-size: 1rem;
     }
-    /* Confetti (simple placeholder) */
+
+    /* MATH CHALLENGE */
+    #math-question {
+      margin: 1rem 0;
+    }
+    #math-answer {
+      text-align: center;
+    }
+    #math-container.hidden {
+      display: none;
+    }
+
+    /* CONFETTI (SIMPLE PLACEHOLDER) */
     .confetti {
       position: fixed;
-      z-index: 1000;
+      font-size: 2rem;
       animation: fadeOut 1s ease-out forwards;
+      z-index: 9999;
     }
     @keyframes fadeOut {
-      0% { opacity: 1; }
-      100% { opacity: 0; }
+      0% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+      }
     }
-    /* Shake animation for wrong answer */
     @keyframes shake {
-      0% { transform: translateX(0); }
-      25% { transform: translateX(-5px); }
-      50% { transform: translateX(5px); }
-      75% { transform: translateX(-5px); }
-      100% { transform: translateX(0); }
+      0% {
+        transform: translateX(0);
+      }
+      25% {
+        transform: translateX(-5px);
+      }
+      50% {
+        transform: translateX(5px);
+      }
+      75% {
+        transform: translateX(-5px);
+      }
+      100% {
+        transform: translateX(0);
+      }
     }
     .shake {
       animation: shake 0.5s;
     }
-    /* Math Challenge Toggle */
-    #math-container.hidden {
-      display: none;
-    }
-    /* Gallery Styles */
-    .gallery {
+
+    /* GALLERY */
+    .gallery-images {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
+      margin-top: 1rem;
     }
-    .gallery img {
-      max-width: 300px;
-      margin: 10px;
-      border: 5px solid #fff;
+    .gallery-images img {
+      max-width: 200px;
+      margin: 0.5rem;
+      border: 5px solid #fff url("https://via.placeholder.com/800x800?text=Stone+Brick+Frame")
+        center/cover;
       border-radius: 5px;
       transition: transform 0.3s;
     }
-    .gallery img:hover {
+    .gallery-images img:hover {
       transform: scale(1.05);
     }
-    /* Responsive adjustments */
-    @media (max-width: 768px) {
-      header h1 {
-        font-size: 1.8rem;
-      }
-      .card-header {
-        font-size: 1.2rem;
-      }
+
+    /* DRAWING CANVAS */
+    #draw-canvas {
+      border: 3px solid #fff;
+      display: block;
+      margin: 1rem auto;
+      background-color: #eee;
     }
+    .draw-controls {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+    .draw-controls label {
+      margin: 0.5rem 0;
+    }
+
+    /* FOOTER */
     footer {
-      background: rgba(0, 0, 0, 0.5);
       text-align: center;
       padding: 1rem;
+      background: url("https://via.placeholder.com/1200x400?text=Diamond+Banner")
+        center/cover no-repeat;
+      color: #fff;
       font-size: 0.9rem;
+      margin-top: 2rem;
+      text-shadow: 2px 2px 4px #000;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .section-header {
+        font-size: 1.2rem;
+      }
+      header h1 {
+        font-size: 1.6rem;
+      }
     }
   </style>
+
   <script defer>
-    document.addEventListener('DOMContentLoaded', () => {
-      // Math Challenge Variables
+    document.addEventListener("DOMContentLoaded", () => {
+      /********************************************************
+       *  MATH CHALLENGE
+       ********************************************************/
       let difficulty = 1;
-      let currentOperation = 'addition';
-      const operations = ['addition', 'subtraction', 'multiplication', 'division', 'fractions', 'geometry'];
-      
-      const difficultyDisplay = document.getElementById('difficulty-level');
-      const questionDisplay = document.getElementById('math-question');
-      const answerInput = document.getElementById('math-answer');
+      let currentOperation = "addition";
+      const operations = [
+        "addition",
+        "subtraction",
+        "multiplication",
+        "division",
+        "fractions",
+        "geometry",
+      ];
+
+      const difficultyDisplay = document.getElementById("difficulty-level");
+      const questionDisplay = document.getElementById("math-question");
+      const answerInput = document.getElementById("math-answer");
       let currentAnswer;
-      
-      // Generate a new math question
+
       function generateQuestion() {
         difficultyDisplay.textContent = `Difficulty: ${difficulty}`;
         let num1 = Math.floor(Math.random() * (difficulty * 10)) + 1;
         let num2 = Math.floor(Math.random() * (difficulty * 10)) + 1;
-        let questionText = '';
-        switch(currentOperation) {
-          case 'addition':
+        let questionText = "";
+
+        switch (currentOperation) {
+          case "addition":
             questionText = `${num1} + ${num2} = ?`;
             currentAnswer = num1 + num2;
             break;
-          case 'subtraction':
+          case "subtraction":
             questionText = `${num1} - ${num2} = ?`;
             currentAnswer = num1 - num2;
             break;
-          case 'multiplication':
+          case "multiplication":
             questionText = `${num1} × ${num2} = ?`;
             currentAnswer = num1 * num2;
             break;
-          case 'division':
+          case "division":
             num1 = num1 * num2; // ensure clean division
             questionText = `${num1} ÷ ${num2} = ?`;
             currentAnswer = num1 / num2;
             break;
-          case 'fractions':
-            questionText = `Simplify: ${(num1 * 2)}/${(num2 * 2)}`;
+          case "fractions":
+            questionText = `Simplify: ${num1 * 2}/${num2 * 2}`;
             currentAnswer = `${num1}/${num2}`;
             break;
-          case 'geometry':
+          case "geometry":
             questionText = `Area of a square with side ${num1}?`;
             currentAnswer = num1 * num1;
             break;
         }
+
         questionDisplay.textContent = questionText;
-        answerInput.value = '';
+        answerInput.value = "";
       }
-      
-      // Check the answer submitted by the user
+
       function checkAnswer() {
-        let userAnswer = answerInput.value.trim();
-        if (userAnswer === '') return;
-        if (currentOperation === 'fractions') {
+        const userAnswer = answerInput.value.trim();
+        if (userAnswer === "") return;
+
+        if (currentOperation === "fractions") {
+          // fraction check as string
           if (userAnswer === currentAnswer) {
             correctAnswer();
           } else {
             wrongAnswer();
           }
         } else {
+          // numeric check
           if (Number(userAnswer) === currentAnswer) {
             correctAnswer();
           } else {
@@ -230,111 +301,130 @@
           }
         }
       }
-      
-      function correctAnswer(){
+
+      function correctAnswer() {
         difficulty++;
         showConfetti();
         generateQuestion();
       }
-      
-      function wrongAnswer(){
-        answerInput.classList.add('shake');
+
+      function wrongAnswer() {
+        answerInput.classList.add("shake");
         setTimeout(() => {
-          answerInput.classList.remove('shake');
+          answerInput.classList.remove("shake");
         }, 500);
       }
-      
-      function cycleOperation(){
+
+      function cycleOperation() {
         const currentIndex = operations.indexOf(currentOperation);
         currentOperation = operations[(currentIndex + 1) % operations.length];
         generateQuestion();
       }
-      
-      function restartChallenge(){
+
+      function restartChallenge() {
         difficulty = 1;
         generateQuestion();
       }
-      
-      // Toggle Math Challenge visibility
-      const mathContainer = document.getElementById('math-container');
-      const toggleButton = document.getElementById('toggle-math');
-      
-      function toggleMath(){
-        mathContainer.classList.toggle('hidden');
-        toggleButton.textContent = mathContainer.classList.contains('hidden') ? 'Show Math Challenge' : 'Hide Math Challenge';
-      }
-      
-      toggleButton.addEventListener('click', toggleMath);
-      document.getElementById('submit-answer').addEventListener('click', checkAnswer);
-      answerInput.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') checkAnswer();
-      });
-      document.getElementById('skip-question').addEventListener('click', generateQuestion);
-      document.getElementById('cycle-operation').addEventListener('click', cycleOperation);
-      document.getElementById('restart-challenge').addEventListener('click', restartChallenge);
-      
-      generateQuestion();
-      
-      // Simple confetti effect (placeholder)
-      function showConfetti(){
-        const confetti = document.createElement('div');
-        confetti.textContent = '🎉';
-        confetti.className = 'confetti';
-        confetti.style.top = Math.random() * 100 + '%';
-        confetti.style.left = Math.random() * 100 + '%';
-        confetti.style.fontSize = '2rem';
+
+      function showConfetti() {
+        const confetti = document.createElement("div");
+        confetti.textContent = "🎉";
+        confetti.className = "confetti";
+        // random position
+        confetti.style.top = Math.random() * 100 + "%";
+        confetti.style.left = Math.random() * 100 + "%";
         document.body.appendChild(confetti);
-        setTimeout(() => { confetti.remove(); }, 1000);
+        setTimeout(() => confetti.remove(), 1000);
       }
-    });
-  </script>
-</head>
-<body>
-  <header>
-    <h1>Jake's Epic Playground</h1>
-    <nav>
-      <a href="#intro" class="button">Home</a>
-      <a href="#math-challenge" class="button">Math Challenge</a>
-      <a href="#music" class="button">Music Lounge</a>
-      <a href="#puzzle" class="button">Puzzle Zone</a>
-      <a href="#gallery" class="button">Gallery</a>
-    </nav>
-  </header>
-  <main>
-    <!-- Intro Section -->
-    <section id="intro">
-      <div class="card-header">Welcome</div>
-      <p>Welcome to Jake's Epic Playground—a fun, interactive hub where Jake, his family, and friends can explore his creations, play games, listen to awesome tunes, and dive into cool puzzles!</p>
-    </section>
-    <!-- Math Challenge Section -->
-    <section id="math-challenge">
-      <div class="card-header">Math Challenge</div>
-      <button id="toggle-math" class="button">Hide Math Challenge</button>
-      <div id="math-container">
-        <p id="difficulty-level">Difficulty: 1</p>
-        <p id="math-question">Press Submit to Start!</p>
-        <input type="number" id="math-answer" placeholder="Your answer">
-        <div class="button-group">
-          <button id="submit-answer" class="button">Submit</button>
-          <button id="skip-question" class="button">Skip</button>
-          <button id="cycle-operation" class="button">Change Operation</button>
-          <button id="restart-challenge" class="button">Restart</button>
-        </div>
-      </div>
-    </section>
-    <!-- Music Lounge Section -->
-    <section id="music">
-      <div class="card-header">Music Lounge</div>
-      <iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M" height="380" allow="encrypted-media" allowfullscreen></iframe>
-    </section>
-    <!-- Puzzle Zone Section -->
-    <section id="puzzle">
-      <div class="card-header">Puzzle Zone</div>
-      <iframe src="https://ruwix.com/online-puzzle-simulators/" height="500"></iframe>
-    </section>
-    <!-- Gallery Section -->
-    <section id="gallery">
-      <div class="card-header">Gallery</div>
-      <div class="gallery">
-        <img src="https://via.placeholder.com/300x200?text=Cool+Jake+1" alt="Cool Jake 1">
-        <img src="https://
+
+      // Toggle math challenge
+      const mathContainer = document.getElementById("math-container");
+      const toggleMathBtn = document.getElementById("toggle-math");
+
+      function toggleMath() {
+        mathContainer.classList.toggle("hidden");
+        toggleMathBtn.textContent = mathContainer.classList.contains("hidden")
+          ? "Show Math Challenge"
+          : "Hide Math Challenge";
+      }
+
+      toggleMathBtn.addEventListener("click", toggleMath);
+      document.getElementById("submit-answer").addEventListener("click", checkAnswer);
+      answerInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") checkAnswer();
+      });
+      document.getElementById("skip-question").addEventListener("click", generateQuestion);
+      document.getElementById("cycle-operation").addEventListener("click", cycleOperation);
+      document.getElementById("restart-challenge").addEventListener("click", restartChallenge);
+
+      generateQuestion();
+
+      /********************************************************
+       *  DRAW & UPLOAD FEATURE
+       ********************************************************/
+      const canvas = document.getElementById("draw-canvas");
+      const ctx = canvas.getContext("2d");
+      let drawing = false;
+      let brushColor = "#000000";
+      let brushSize = 4;
+
+      // Setup canvas
+      function setupCanvas() {
+        canvas.width = 600;
+        canvas.height = 400;
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+      }
+
+      setupCanvas();
+
+      canvas.addEventListener("mousedown", () => (drawing = true));
+      canvas.addEventListener("mouseup", () => (drawing = false));
+      canvas.addEventListener("mousemove", drawOnCanvas);
+
+      function drawOnCanvas(e) {
+        if (!drawing) return;
+        const rect = canvas.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        ctx.fillStyle = brushColor;
+        ctx.beginPath();
+        ctx.arc(x, y, brushSize, 0, 2 * Math.PI);
+        ctx.fill();
+      }
+
+      // Brush controls
+      document.getElementById("brush-color").addEventListener("change", (e) => {
+        brushColor = e.target.value;
+      });
+      document.getElementById("brush-size").addEventListener("change", (e) => {
+        brushSize = Number(e.target.value);
+      });
+
+      // Clear canvas
+      document.getElementById("clear-canvas").addEventListener("click", () => {
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+      });
+
+      // Save drawing
+      document.getElementById("save-drawing").addEventListener("click", () => {
+        const dataURL = canvas.toDataURL("image/png");
+        addImageToGallery(dataURL);
+      });
+
+      // Upload file
+      document.getElementById("upload-file").addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function (event) {
+          addImageToGallery(event.target.result);
+        };
+        reader.readAsDataURL(file);
+      });
+
+      // Gallery
+      let galleryData = JSON.parse(localStorage.getItem("jakeGallery")) || [];
+      const galleryContainer = document.getElementBy
