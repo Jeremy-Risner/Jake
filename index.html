@@ -18,18 +18,15 @@
       margin: 0;
       padding: 0;
     }
-
     body {
       font-family: Arial, sans-serif;
       background: #2e7d32 url("https://via.placeholder.com/800x800?text=Grass+Pattern") repeat;
       color: #fff;
       line-height: 1.5;
     }
-
     /* HEADER */
     header {
-      background: url("https://via.placeholder.com/1200x400?text=Creeper+Banner")
-        center/cover no-repeat;
+      background: url("https://via.placeholder.com/1200x400?text=Creeper+Banner") center/cover no-repeat;
       text-align: center;
       padding: 2rem 1rem;
     }
@@ -39,7 +36,6 @@
       color: #fff;
       text-shadow: 2px 2px 4px #000;
     }
-
     /* NAVIGATION */
     nav {
       display: flex;
@@ -61,23 +57,20 @@
     nav a:hover {
       background-color: #66bb6a;
     }
-
     /* MAIN CONTENT */
     main {
       max-width: 1200px;
       margin: 1rem auto;
       padding: 1rem;
     }
-
     section {
       background-color: rgba(0, 0, 0, 0.5);
       margin: 2rem 0;
       border-radius: 10px;
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
       padding: 1.5rem;
-      text-align: center; /* Center content */
+      text-align: center;
     }
-
     .section-header {
       font-family: "Press Start 2P", cursive;
       font-size: 1.5rem;
@@ -85,7 +78,6 @@
       padding-bottom: 0.5rem;
       border-bottom: 2px solid #fff;
     }
-
     /* BUTTONS & INPUTS */
     .button {
       display: inline-block;
@@ -103,7 +95,6 @@
       background-color: #ccc;
     }
     input[type="file"],
-    input[type="number"],
     input[type="text"] {
       display: block;
       margin: 0.5rem auto;
@@ -114,7 +105,6 @@
       max-width: 300px;
       font-size: 1rem;
     }
-
     /* MATH CHALLENGE */
     #math-question {
       margin: 1rem 0;
@@ -125,7 +115,11 @@
     #math-container.hidden {
       display: none;
     }
-
+    #wrong-message {
+      color: #ff5555;
+      margin-top: 0.5rem;
+      height: 1.2em;
+    }
     /* CONFETTI (SIMPLE PLACEHOLDER) */
     .confetti {
       position: fixed;
@@ -134,34 +128,19 @@
       z-index: 9999;
     }
     @keyframes fadeOut {
-      0% {
-        opacity: 1;
-      }
-      100% {
-        opacity: 0;
-      }
+      0% { opacity: 1; }
+      100% { opacity: 0; }
     }
     @keyframes shake {
-      0% {
-        transform: translateX(0);
-      }
-      25% {
-        transform: translateX(-5px);
-      }
-      50% {
-        transform: translateX(5px);
-      }
-      75% {
-        transform: translateX(-5px);
-      }
-      100% {
-        transform: translateX(0);
-      }
+      0% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      50% { transform: translateX(5px); }
+      75% { transform: translateX(-5px); }
+      100% { transform: translateX(0); }
     }
     .shake {
       animation: shake 0.5s;
     }
-
     /* GALLERY */
     .gallery-images {
       display: flex;
@@ -172,15 +151,13 @@
     .gallery-images img {
       max-width: 200px;
       margin: 0.5rem;
-      border: 5px solid #fff url("https://via.placeholder.com/800x800?text=Stone+Brick+Frame")
-        center/cover;
+      border: 5px solid #fff url("https://via.placeholder.com/800x800?text=Stone+Brick+Frame") center/cover;
       border-radius: 5px;
       transition: transform 0.3s;
     }
     .gallery-images img:hover {
       transform: scale(1.05);
     }
-
     /* DRAWING CANVAS */
     #draw-canvas {
       border: 3px solid #fff;
@@ -198,27 +175,20 @@
     .draw-controls label {
       margin: 0.5rem 0;
     }
-
     /* FOOTER */
     footer {
       text-align: center;
       padding: 1rem;
-      background: url("https://via.placeholder.com/1200x400?text=Diamond+Banner")
-        center/cover no-repeat;
+      background: url("https://via.placeholder.com/1200x400?text=Diamond+Banner") center/cover no-repeat;
       color: #fff;
       font-size: 0.9rem;
       margin-top: 2rem;
       text-shadow: 2px 2px 4px #000;
     }
-
     /* RESPONSIVE */
     @media (max-width: 768px) {
-      .section-header {
-        font-size: 1.2rem;
-      }
-      header h1 {
-        font-size: 1.6rem;
-      }
+      .section-header { font-size: 1.2rem; }
+      header h1 { font-size: 1.6rem; }
     }
   </style>
 
@@ -229,26 +199,19 @@
        ********************************************************/
       let difficulty = 1;
       let currentOperation = "addition";
-      const operations = [
-        "addition",
-        "subtraction",
-        "multiplication",
-        "division",
-        "fractions",
-        "geometry",
-      ];
-
+      const operations = ["addition", "subtraction", "multiplication", "division", "fractions", "geometry"];
       const difficultyDisplay = document.getElementById("difficulty-level");
       const questionDisplay = document.getElementById("math-question");
       const answerInput = document.getElementById("math-answer");
+      const wrongMessage = document.getElementById("wrong-message");
       let currentAnswer;
 
       function generateQuestion() {
+        wrongMessage.textContent = "";
         difficultyDisplay.textContent = `Difficulty: ${difficulty}`;
         let num1 = Math.floor(Math.random() * (difficulty * 10)) + 1;
         let num2 = Math.floor(Math.random() * (difficulty * 10)) + 1;
         let questionText = "";
-
         switch (currentOperation) {
           case "addition":
             questionText = `${num1} + ${num2} = ?`;
@@ -276,7 +239,6 @@
             currentAnswer = num1 * num1;
             break;
         }
-
         questionDisplay.textContent = questionText;
         answerInput.value = "";
       }
@@ -284,16 +246,13 @@
       function checkAnswer() {
         const userAnswer = answerInput.value.trim();
         if (userAnswer === "") return;
-
         if (currentOperation === "fractions") {
-          // fraction check as string
           if (userAnswer === currentAnswer) {
             correctAnswer();
           } else {
             wrongAnswer();
           }
         } else {
-          // numeric check
           if (Number(userAnswer) === currentAnswer) {
             correctAnswer();
           } else {
@@ -309,10 +268,12 @@
       }
 
       function wrongAnswer() {
+        wrongMessage.textContent = "Incorrect, try again!";
         answerInput.classList.add("shake");
         setTimeout(() => {
           answerInput.classList.remove("shake");
-        }, 500);
+          wrongMessage.textContent = "";
+        }, 1000);
       }
 
       function cycleOperation() {
@@ -326,37 +287,21 @@
         generateQuestion();
       }
 
-      function showConfetti() {
-        const confetti = document.createElement("div");
-        confetti.textContent = "🎉";
-        confetti.className = "confetti";
-        // random position
-        confetti.style.top = Math.random() * 100 + "%";
-        confetti.style.left = Math.random() * 100 + "%";
-        document.body.appendChild(confetti);
-        setTimeout(() => confetti.remove(), 1000);
-      }
-
-      // Toggle math challenge
+      // Toggle math challenge visibility
       const mathContainer = document.getElementById("math-container");
       const toggleMathBtn = document.getElementById("toggle-math");
-
       function toggleMath() {
         mathContainer.classList.toggle("hidden");
         toggleMathBtn.textContent = mathContainer.classList.contains("hidden")
           ? "Show Math Challenge"
           : "Hide Math Challenge";
       }
-
       toggleMathBtn.addEventListener("click", toggleMath);
       document.getElementById("submit-answer").addEventListener("click", checkAnswer);
-      answerInput.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") checkAnswer();
-      });
+      answerInput.addEventListener("keydown", (e) => { if (e.key === "Enter") checkAnswer(); });
       document.getElementById("skip-question").addEventListener("click", generateQuestion);
       document.getElementById("cycle-operation").addEventListener("click", cycleOperation);
       document.getElementById("restart-challenge").addEventListener("click", restartChallenge);
-
       generateQuestion();
 
       /********************************************************
@@ -367,54 +312,40 @@
       let drawing = false;
       let brushColor = "#000000";
       let brushSize = 4;
-
-      // Setup canvas
       function setupCanvas() {
         canvas.width = 600;
         canvas.height = 400;
         ctx.fillStyle = "#ffffff";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
       }
-
       setupCanvas();
-
-      canvas.addEventListener("mousedown", () => (drawing = true));
-      canvas.addEventListener("mouseup", () => (drawing = false));
+      canvas.addEventListener("mousedown", () => drawing = true);
+      canvas.addEventListener("mouseup", () => drawing = false);
       canvas.addEventListener("mousemove", drawOnCanvas);
-
       function drawOnCanvas(e) {
         if (!drawing) return;
         const rect = canvas.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
-
         ctx.fillStyle = brushColor;
         ctx.beginPath();
         ctx.arc(x, y, brushSize, 0, 2 * Math.PI);
         ctx.fill();
       }
-
-      // Brush controls
       document.getElementById("brush-color").addEventListener("change", (e) => {
         brushColor = e.target.value;
       });
       document.getElementById("brush-size").addEventListener("change", (e) => {
         brushSize = Number(e.target.value);
       });
-
-      // Clear canvas
       document.getElementById("clear-canvas").addEventListener("click", () => {
         ctx.fillStyle = "#ffffff";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
       });
-
-      // Save drawing
       document.getElementById("save-drawing").addEventListener("click", () => {
         const dataURL = canvas.toDataURL("image/png");
         addImageToGallery(dataURL);
       });
-
-      // Upload file
       document.getElementById("upload-file").addEventListener("change", (e) => {
         const file = e.target.files[0];
         if (!file) return;
@@ -424,24 +355,30 @@
         };
         reader.readAsDataURL(file);
       });
-
-      // Gallery
       let galleryData = JSON.parse(localStorage.getItem("jakeGallery")) || [];
       const galleryContainer = document.getElementById("gallery-images");
-
-      // Load existing from local storage
       galleryData.forEach((imgSrc) => createGalleryImage(imgSrc));
-
       function addImageToGallery(imgSrc) {
         galleryData.push(imgSrc);
         localStorage.setItem("jakeGallery", JSON.stringify(galleryData));
         createGalleryImage(imgSrc);
       }
-
       function createGalleryImage(imgSrc) {
         const img = document.createElement("img");
         img.src = imgSrc;
         galleryContainer.appendChild(img);
+      }
+      /********************************************************
+       *  SIMPLE CONFETTI EFFECT
+       ********************************************************/
+      function showConfetti() {
+        const confetti = document.createElement("div");
+        confetti.textContent = "🎉";
+        confetti.className = "confetti";
+        confetti.style.top = Math.random() * 100 + "%";
+        confetti.style.left = Math.random() * 100 + "%";
+        document.body.appendChild(confetti);
+        setTimeout(() => confetti.remove(), 1000);
       }
     });
   </script>
@@ -451,7 +388,6 @@
   <header>
     <h1>Jake's Epic Playground</h1>
   </header>
-
   <!-- NAV -->
   <nav>
     <a href="#intro">Home</a>
@@ -461,7 +397,6 @@
     <a href="#draw-upload">Draw & Upload</a>
     <a href="#gallery">Gallery</a>
   </nav>
-
   <!-- MAIN CONTENT -->
   <main>
     <!-- Intro Section -->
@@ -473,7 +408,6 @@
         awesome tunes, and dive into cool puzzles!
       </p>
     </section>
-
     <!-- Math Challenge -->
     <section id="math-challenge">
       <div class="section-header">Math Challenge</div>
@@ -481,7 +415,9 @@
       <div id="math-container">
         <p id="difficulty-level">Difficulty: 1</p>
         <p id="math-question">Loading question...</p>
-        <input type="number" id="math-answer" placeholder="Your answer" />
+        <!-- Changed input type to "text" to allow "/" in fraction answers -->
+        <input type="text" id="math-answer" placeholder="Your answer" />
+        <div id="wrong-message"></div>
         <div>
           <button id="submit-answer" class="button">Submit</button>
           <button id="skip-question" class="button">Skip</button>
@@ -490,12 +426,10 @@
         </div>
       </div>
     </section>
-
     <!-- Music Lounge -->
     <section id="music-lounge">
       <div class="section-header">Music Lounge</div>
       <div style="display: flex; justify-content: center; margin-top: 1rem;">
-        <!-- If you get "request timeout," it may be a local network or Spotify issue -->
         <iframe
           src="https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M"
           width="80%"
@@ -505,12 +439,10 @@
         ></iframe>
       </div>
     </section>
-
     <!-- Puzzle Zone -->
     <section id="puzzle-zone">
       <div class="section-header">Puzzle Zone</div>
       <div style="display: flex; justify-content: center; margin-top: 1rem;">
-        <!-- Attempting to remove headers/footers from the widget with embed params -->
         <iframe
           src="https://ruwix.com/online-puzzle-simulators/3d/?embed=1&footer=0&header=0"
           width="600"
@@ -519,16 +451,15 @@
         ></iframe>
       </div>
     </section>
-
     <!-- Draw & Upload -->
     <section id="draw-upload">
       <div class="section-header">Draw & Upload</div>
-      <p>Create your own masterpiece or upload an image to show in the Gallery!</p>
+      <p>Create your masterpiece or upload an image to show in the Gallery!</p>
       <canvas id="draw-canvas"></canvas>
       <div class="draw-controls">
-        <label for="brush-color">Color: </label>
+        <label for="brush-color">Color:</label>
         <input type="color" id="brush-color" value="#000000" />
-        <label for="brush-size">Brush Size: </label>
+        <label for="brush-size">Brush Size:</label>
         <input type="number" id="brush-size" min="1" max="20" value="4" />
       </div>
       <div>
@@ -539,14 +470,12 @@
       <p>Or upload an image from your computer:</p>
       <input type="file" id="upload-file" accept="image/*" />
     </section>
-
     <!-- Gallery -->
     <section id="gallery">
       <div class="section-header">Gallery</div>
       <div id="gallery-images" class="gallery-images"></div>
     </section>
   </main>
-
   <!-- FOOTER -->
   <footer>
     <p>&copy; 2025 Jake's Epic Playground. All rights reserved.</p>
