@@ -1,172 +1,340 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Jacob's Awesome Website</title>
-    <style>
-        body {
-            background-color: #1b5e20;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            color: #fff;
-        }
-        h1 {
-            font-size: 3em;
-            text-shadow: 2px 2px 4px #000;
-        }
-        p {
-            font-size: 1.5em;
-        }
-        .math-container, .rubiks-container, .spotify-container, .image-container {
-            background-color: #2e7d32;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 3px 3px 10px #000;
-            max-width: 600px;
-            margin: 20px auto;
-            position: relative;
-        }
-        .math-container.hidden {
-            display: block;
-        }
-        .button-container {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 10px;
-        }
-        .button-container button {
-            margin: 5px;
-            padding: 10px;
-            border: none;
-            background: white;
-            color: black;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .hidden {
-            display: none;
-        }
-        .gray-out {
-            background-color: gray !important;
-            opacity: 0.7;
-        }
-    </style>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            let difficulty = 1;
-            let currentOperation = "addition";
-            let questionHistory = [];
-            const operations = ["addition", "subtraction", "multiplication", "division", "fractions", "geometry"];
-            generateQuestion();
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Jake's Epic Playground</title>
+  <!-- Pixelated font for headings -->
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    /* Global Styles */
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #1b5e20, #4caf50);
+      color: #fff;
+      line-height: 1.6;
+    }
+    a {
+      text-decoration: none;
+    }
 
-            function generateQuestion() {
-                document.getElementById("difficulty-level").innerText = `Current Difficulty: ${difficulty}`;
-                let num1 = Math.floor(Math.random() * (difficulty * 10)) + 1;
-                let num2 = Math.floor(Math.random() * (difficulty * 10)) + 1;
-                let question = "";
-                let answer = 0;
+    /* Header & Navigation */
+    header {
+      background: rgba(0, 0, 0, 0.5);
+      padding: 1.5rem;
+      text-align: center;
+    }
+    header h1 {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 2.5rem;
+      margin: 0;
+      text-shadow: 2px 2px 4px #000;
+    }
+    nav {
+      margin-top: 1rem;
+    }
+    nav .button {
+      margin: 0.3rem;
+      padding: 0.5rem 1rem;
+      background-color: #fff;
+      color: #000;
+      border: none;
+      border-radius: 5px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    nav .button:hover {
+      background-color: #ddd;
+    }
 
-                switch (currentOperation) {
-                    case "addition":
-                        question = `${num1} + ${num2} = ?`;
-                        answer = num1 + num2;
-                        break;
-                    case "subtraction":
-                        question = `${num1} - ${num2} = ?`;
-                        answer = num1 - num2;
-                        break;
-                    case "multiplication":
-                        question = `${num1} × ${num2} = ?`;
-                        answer = num1 * num2;
-                        break;
-                    case "division":
-                        num1 = num1 * num2;
-                        question = `${num1} ÷ ${num2} = ?`;
-                        answer = num1 / num2;
-                        break;
-                    case "fractions":
-                        question = `Simplify: ${(num1 * 2)}/${(num2 * 2)}`;
-                        answer = `${num1}/${num2}`;
-                        break;
-                    case "geometry":
-                        question = `What is the area of a square with side length ${num1}?`;
-                        answer = num1 * num1;
-                        break;
-                }
-                questionHistory.push({ question, answer });
-                document.getElementById("math-question").innerText = question;
-                document.getElementById("math-answer").value = "";
-                document.getElementById("math-answer").dataset.answer = answer;
-            }
-
-            function checkAnswer() {
-                let answer = document.getElementById("math-answer").value;
-                let correct = document.getElementById("math-answer").dataset.answer;
-                if (answer == correct) {
-                    difficulty++;
-                    launchConfetti();
-                    generateQuestion();
-                }
-            }
-
-            function cycleOperation() {
-                let index = operations.indexOf(currentOperation);
-                currentOperation = operations[(index + 1) % operations.length];
-                generateQuestion();
-            }
-
-            function closeMathChallenge() {
-                document.querySelector(".math-container").classList.add("gray-out");
-                document.getElementById("open-math-btn").classList.remove("hidden");
-                document.getElementById("math-controls").classList.add("hidden");
-            }
-
-            function openMathChallenge() {
-                document.querySelector(".math-container").classList.remove("gray-out");
-                document.getElementById("open-math-btn").classList.add("hidden");
-                document.getElementById("math-controls").classList.remove("hidden");
-            }
-
-            function launchConfetti() {
-                alert("🎉 Confetti Effect! (To be implemented with animation)");
-            }
-        });
-    </script>
+    /* Main Layout */
+    main {
+      max-width: 1200px;
+      margin: 1rem auto;
+      padding: 0 1rem;
+    }
+    section {
+      background-color: rgba(0, 100, 0, 0.7);
+      margin: 2rem 0;
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.7);
+      transition: transform 0.3s;
+    }
+    section:hover {
+      transform: scale(1.02);
+    }
+    .card-header {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #fff;
+      text-align: center;
+    }
+    .button-group {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+    .button {
+      background-color: #fff;
+      color: #000;
+      border: none;
+      padding: 0.5rem 1rem;
+      margin: 0.5rem;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      font-size: 0.9rem;
+    }
+    .button:hover {
+      background-color: #ddd;
+    }
+    input[type="number"],
+    input[type="text"] {
+      padding: 0.5rem;
+      margin: 0.5rem;
+      border: none;
+      border-radius: 5px;
+      width: 150px;
+      font-size: 1rem;
+    }
+    /* Confetti (simple placeholder) */
+    .confetti {
+      position: fixed;
+      z-index: 1000;
+      animation: fadeOut 1s ease-out forwards;
+    }
+    @keyframes fadeOut {
+      0% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+    /* Shake animation for wrong answer */
+    @keyframes shake {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      50% { transform: translateX(5px); }
+      75% { transform: translateX(-5px); }
+      100% { transform: translateX(0); }
+    }
+    .shake {
+      animation: shake 0.5s;
+    }
+    /* Math Challenge Toggle */
+    #math-container.hidden {
+      display: none;
+    }
+    /* Gallery Styles */
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .gallery img {
+      max-width: 300px;
+      margin: 10px;
+      border: 5px solid #fff;
+      border-radius: 5px;
+      transition: transform 0.3s;
+    }
+    .gallery img:hover {
+      transform: scale(1.05);
+    }
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 1.8rem;
+      }
+      .card-header {
+        font-size: 1.2rem;
+      }
+    }
+    footer {
+      background: rgba(0, 0, 0, 0.5);
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+    }
+  </style>
+  <script defer>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Math Challenge Variables
+      let difficulty = 1;
+      let currentOperation = 'addition';
+      const operations = ['addition', 'subtraction', 'multiplication', 'division', 'fractions', 'geometry'];
+      
+      const difficultyDisplay = document.getElementById('difficulty-level');
+      const questionDisplay = document.getElementById('math-question');
+      const answerInput = document.getElementById('math-answer');
+      let currentAnswer;
+      
+      // Generate a new math question
+      function generateQuestion() {
+        difficultyDisplay.textContent = `Difficulty: ${difficulty}`;
+        let num1 = Math.floor(Math.random() * (difficulty * 10)) + 1;
+        let num2 = Math.floor(Math.random() * (difficulty * 10)) + 1;
+        let questionText = '';
+        switch(currentOperation) {
+          case 'addition':
+            questionText = `${num1} + ${num2} = ?`;
+            currentAnswer = num1 + num2;
+            break;
+          case 'subtraction':
+            questionText = `${num1} - ${num2} = ?`;
+            currentAnswer = num1 - num2;
+            break;
+          case 'multiplication':
+            questionText = `${num1} × ${num2} = ?`;
+            currentAnswer = num1 * num2;
+            break;
+          case 'division':
+            num1 = num1 * num2; // ensure clean division
+            questionText = `${num1} ÷ ${num2} = ?`;
+            currentAnswer = num1 / num2;
+            break;
+          case 'fractions':
+            questionText = `Simplify: ${(num1 * 2)}/${(num2 * 2)}`;
+            currentAnswer = `${num1}/${num2}`;
+            break;
+          case 'geometry':
+            questionText = `Area of a square with side ${num1}?`;
+            currentAnswer = num1 * num1;
+            break;
+        }
+        questionDisplay.textContent = questionText;
+        answerInput.value = '';
+      }
+      
+      // Check the answer submitted by the user
+      function checkAnswer() {
+        let userAnswer = answerInput.value.trim();
+        if (userAnswer === '') return;
+        if (currentOperation === 'fractions') {
+          if (userAnswer === currentAnswer) {
+            correctAnswer();
+          } else {
+            wrongAnswer();
+          }
+        } else {
+          if (Number(userAnswer) === currentAnswer) {
+            correctAnswer();
+          } else {
+            wrongAnswer();
+          }
+        }
+      }
+      
+      function correctAnswer(){
+        difficulty++;
+        showConfetti();
+        generateQuestion();
+      }
+      
+      function wrongAnswer(){
+        answerInput.classList.add('shake');
+        setTimeout(() => {
+          answerInput.classList.remove('shake');
+        }, 500);
+      }
+      
+      function cycleOperation(){
+        const currentIndex = operations.indexOf(currentOperation);
+        currentOperation = operations[(currentIndex + 1) % operations.length];
+        generateQuestion();
+      }
+      
+      function restartChallenge(){
+        difficulty = 1;
+        generateQuestion();
+      }
+      
+      // Toggle Math Challenge visibility
+      const mathContainer = document.getElementById('math-container');
+      const toggleButton = document.getElementById('toggle-math');
+      
+      function toggleMath(){
+        mathContainer.classList.toggle('hidden');
+        toggleButton.textContent = mathContainer.classList.contains('hidden') ? 'Show Math Challenge' : 'Hide Math Challenge';
+      }
+      
+      toggleButton.addEventListener('click', toggleMath);
+      document.getElementById('submit-answer').addEventListener('click', checkAnswer);
+      answerInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') checkAnswer();
+      });
+      document.getElementById('skip-question').addEventListener('click', generateQuestion);
+      document.getElementById('cycle-operation').addEventListener('click', cycleOperation);
+      document.getElementById('restart-challenge').addEventListener('click', restartChallenge);
+      
+      generateQuestion();
+      
+      // Simple confetti effect (placeholder)
+      function showConfetti(){
+        const confetti = document.createElement('div');
+        confetti.textContent = '🎉';
+        confetti.className = 'confetti';
+        confetti.style.top = Math.random() * 100 + '%';
+        confetti.style.left = Math.random() * 100 + '%';
+        confetti.style.fontSize = '2rem';
+        document.body.appendChild(confetti);
+        setTimeout(() => { confetti.remove(); }, 1000);
+      }
+    });
+  </script>
 </head>
 <body>
-    <div class="minecraft-bg">
-        <h1>Welcome to Jacob's Website!</h1>
-        <div class="button-container">
-            <a href="https://www.google.com" target="_blank">Google</a>
-            <a href="https://chat.openai.com" target="_blank">ChatGPT</a>
+  <header>
+    <h1>Jake's Epic Playground</h1>
+    <nav>
+      <a href="#intro" class="button">Home</a>
+      <a href="#math-challenge" class="button">Math Challenge</a>
+      <a href="#music" class="button">Music Lounge</a>
+      <a href="#puzzle" class="button">Puzzle Zone</a>
+      <a href="#gallery" class="button">Gallery</a>
+    </nav>
+  </header>
+  <main>
+    <!-- Intro Section -->
+    <section id="intro">
+      <div class="card-header">Welcome</div>
+      <p>Welcome to Jake's Epic Playground—a fun, interactive hub where Jake, his family, and friends can explore his creations, play games, listen to awesome tunes, and dive into cool puzzles!</p>
+    </section>
+    <!-- Math Challenge Section -->
+    <section id="math-challenge">
+      <div class="card-header">Math Challenge</div>
+      <button id="toggle-math" class="button">Hide Math Challenge</button>
+      <div id="math-container">
+        <p id="difficulty-level">Difficulty: 1</p>
+        <p id="math-question">Press Submit to Start!</p>
+        <input type="number" id="math-answer" placeholder="Your answer">
+        <div class="button-group">
+          <button id="submit-answer" class="button">Submit</button>
+          <button id="skip-question" class="button">Skip</button>
+          <button id="cycle-operation" class="button">Change Operation</button>
+          <button id="restart-challenge" class="button">Restart</button>
         </div>
-        <div class="image-container">
-            <h2>Cool Jake</h2>
-            <img src="CoolJake1.jpg" alt="Cool Jake 1">
-            <img src="CoolJake2.jpg" alt="Cool Jake 2">
-        </div>
-        <div class="math-container">
-            <h2>Math Challenge</h2>
-            <p id="difficulty-level">Current Difficulty: 1</p>
-            <p id="math-question"></p>
-            <input type="number" id="math-answer" placeholder="Your answer" onkeydown="if(event.key==='Enter'){checkAnswer();}">
-            <button onclick="checkAnswer()">Submit</button>
-            <div id="math-controls" class="button-container">
-                <button onclick="difficulty=1; generateQuestion();">Start Over</button>
-                <button onclick="generateQuestion()">Skip</button>
-                <button onclick="cycleOperation()">Cycle Type</button>
-                <button onclick="closeMathChallenge()">Close Math Challenge</button>
-            </div>
-            <button id="open-math-btn" class="hidden" onclick="openMathChallenge()">Open Math Challenge</button>
-        </div>
-        <div class="spotify-container">
-            <h2>Listen to Music</h2>
-            <iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M" allowfullscreen></iframe>
-        </div>
-        <div class="rubiks-container">
-            <h2>Try Solving Jake's Rubik's Cube!</h2>
-            <iframe src="https://ruwix.com/online-puzzle-simulators/" allowfullscreen></iframe>
-        </div>
-    </div>
-</body>
-</html>
+      </div>
+    </section>
+    <!-- Music Lounge Section -->
+    <section id="music">
+      <div class="card-header">Music Lounge</div>
+      <iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M" height="380" allow="encrypted-media" allowfullscreen></iframe>
+    </section>
+    <!-- Puzzle Zone Section -->
+    <section id="puzzle">
+      <div class="card-header">Puzzle Zone</div>
+      <iframe src="https://ruwix.com/online-puzzle-simulators/" height="500"></iframe>
+    </section>
+    <!-- Gallery Section -->
+    <section id="gallery">
+      <div class="card-header">Gallery</div>
+      <div class="gallery">
+        <img src="https://via.placeholder.com/300x200?text=Cool+Jake+1" alt="Cool Jake 1">
+        <img src="https://
