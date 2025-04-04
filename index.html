@@ -427,4 +427,129 @@
 
       // Gallery
       let galleryData = JSON.parse(localStorage.getItem("jakeGallery")) || [];
-      const galleryContainer = document.getElementBy
+      const galleryContainer = document.getElementById("gallery-images");
+
+      // Load existing from local storage
+      galleryData.forEach((imgSrc) => createGalleryImage(imgSrc));
+
+      function addImageToGallery(imgSrc) {
+        galleryData.push(imgSrc);
+        localStorage.setItem("jakeGallery", JSON.stringify(galleryData));
+        createGalleryImage(imgSrc);
+      }
+
+      function createGalleryImage(imgSrc) {
+        const img = document.createElement("img");
+        img.src = imgSrc;
+        galleryContainer.appendChild(img);
+      }
+    });
+  </script>
+</head>
+<body>
+  <!-- HEADER -->
+  <header>
+    <h1>Jake's Epic Playground</h1>
+  </header>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#intro">Home</a>
+    <a href="#math-challenge">Math Challenge</a>
+    <a href="#music-lounge">Music Lounge</a>
+    <a href="#puzzle-zone">Puzzle Zone</a>
+    <a href="#draw-upload">Draw & Upload</a>
+    <a href="#gallery">Gallery</a>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main>
+    <!-- Intro Section -->
+    <section id="intro">
+      <div class="section-header">Welcome</div>
+      <p>
+        Welcome to Jake's Epic Playground—a fun, interactive hub where Jake, his
+        family, and friends can explore his creations, play games, listen to
+        awesome tunes, and dive into cool puzzles!
+      </p>
+    </section>
+
+    <!-- Math Challenge -->
+    <section id="math-challenge">
+      <div class="section-header">Math Challenge</div>
+      <button id="toggle-math" class="button">Hide Math Challenge</button>
+      <div id="math-container">
+        <p id="difficulty-level">Difficulty: 1</p>
+        <p id="math-question">Loading question...</p>
+        <input type="number" id="math-answer" placeholder="Your answer" />
+        <div>
+          <button id="submit-answer" class="button">Submit</button>
+          <button id="skip-question" class="button">Skip</button>
+          <button id="cycle-operation" class="button">Change Operation</button>
+          <button id="restart-challenge" class="button">Restart</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Music Lounge -->
+    <section id="music-lounge">
+      <div class="section-header">Music Lounge</div>
+      <div style="display: flex; justify-content: center; margin-top: 1rem;">
+        <!-- If you get "request timeout," it may be a local network or Spotify issue -->
+        <iframe
+          src="https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M"
+          width="80%"
+          height="380"
+          frameborder="0"
+          allow="encrypted-media"
+        ></iframe>
+      </div>
+    </section>
+
+    <!-- Puzzle Zone -->
+    <section id="puzzle-zone">
+      <div class="section-header">Puzzle Zone</div>
+      <div style="display: flex; justify-content: center; margin-top: 1rem;">
+        <!-- Attempting to remove headers/footers from the widget with embed params -->
+        <iframe
+          src="https://ruwix.com/online-puzzle-simulators/3d/?embed=1&footer=0&header=0"
+          width="600"
+          height="500"
+          style="border: none;"
+        ></iframe>
+      </div>
+    </section>
+
+    <!-- Draw & Upload -->
+    <section id="draw-upload">
+      <div class="section-header">Draw & Upload</div>
+      <p>Create your own masterpiece or upload an image to show in the Gallery!</p>
+      <canvas id="draw-canvas"></canvas>
+      <div class="draw-controls">
+        <label for="brush-color">Color: </label>
+        <input type="color" id="brush-color" value="#000000" />
+        <label for="brush-size">Brush Size: </label>
+        <input type="number" id="brush-size" min="1" max="20" value="4" />
+      </div>
+      <div>
+        <button id="clear-canvas" class="button">Clear Canvas</button>
+        <button id="save-drawing" class="button">Save Drawing to Gallery</button>
+      </div>
+      <hr style="margin: 1.5rem 0;" />
+      <p>Or upload an image from your computer:</p>
+      <input type="file" id="upload-file" accept="image/*" />
+    </section>
+
+    <!-- Gallery -->
+    <section id="gallery">
+      <div class="section-header">Gallery</div>
+      <div id="gallery-images" class="gallery-images"></div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2025 Jake's Epic Playground. All rights reserved.</p>
+  </footer>
+</body>
+</html>
